@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
-#include <malloc.h>
+//#include <malloc.h>
 
 #ifdef _MSC_VER
 #pragma warning(disable: 4073)

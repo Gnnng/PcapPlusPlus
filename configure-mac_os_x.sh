@@ -11,7 +11,7 @@ cp -f mk/platform.mk.macosx $PLATFORM_MK
 cp -f mk/PcapPlusPlus.mk.common $PCAPPLUSPLUS_MK
 cat mk/PcapPlusPlus.mk.macosx >> $PCAPPLUSPLUS_MK
 
-echo -e "\n\nPCAPPLUSPLUS_HOME := "$PWD >> $PLATFORM_MK
+echo "\n\nPCAPPLUSPLUS_HOME := "$PWD >> $PLATFORM_MK
 
 sed -i -e '1s|^|PCAPPLUSPLUS_HOME := '$PWD'\'$'\n''\'$'\n''|' $PCAPPLUSPLUS_MK
 
