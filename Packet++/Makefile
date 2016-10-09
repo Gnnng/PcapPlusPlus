@@ -26,11 +26,16 @@ endif
 ifdef LINUX
 INCLUDES += -I/usr/include/netinet
 endif
+
+PPP_OLEVEL := -O2
+ifdef PPP_DEBUG
+	PPP_OLEVEL = -O0
+endif
 			
 Obj/%.o: src/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: GCC C++ Compiler'
-	$(G++) $(DEPS) $(INCLUDES) -O2 -g -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:Obj/%.o=Obj/%.d)" -MT"$(@:Obj/%.o=Obj/%.d)" -o "$@" "$<"
+	$(G++) $(DEPS) $(INCLUDES) $(PPP_OLEVEL) -g -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:Obj/%.o=Obj/%.d)" -MT"$(@:Obj/%.o=Obj/%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
