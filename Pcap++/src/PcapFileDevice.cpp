@@ -89,7 +89,10 @@ bool PcapFileReaderDevice::open()
 	{
 		case LINKTYPE_ETHERNET:
 		case LINKTYPE_LINUX_SLL:
+		case 12: //FIXME: DLT_RAW should be 101 rather than 12
+			m_PcapLinkLayerType = LINKTYPE_RAW; // correct the data link type
 			break;
+		
 		default:
 			LOG_ERROR("Cannot open file reader device for filename '%s': the link type %d is not supported", m_FileName, m_PcapLinkLayerType);
 			return false;

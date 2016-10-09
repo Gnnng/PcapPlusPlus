@@ -2,6 +2,7 @@
 
 #include <Packet.h>
 #include <EthLayer.h>
+#include <IPv4Layer.h>
 #include <SllLayer.h>
 #include <Logger.h>
 #include <string.h>
@@ -39,6 +40,11 @@ void Packet::setRawPacket(RawPacket* rawPacket, bool freeRawPacket)
 	if(m_RawPacket && m_RawPacket->getLinkLayerType() == LINKTYPE_LINUX_SLL)
 	{
 		m_FirstLayer = new SllLayer((uint8_t*)m_RawPacket->getRawData(), m_RawPacket->getRawDataLen(), this);
+	}
+	else if (m_RawPacket->getLinkLayerType() == LINKTYPE_RAW) 
+	{
+		//FIXME: direct get IPv4, may crash when IPv6 comes up
+		m_FirstLayer = new IPv4Layer((uint8_t*)m_RawPacket->getRawData(), m_RawPacket->getRawDataLen(), NULL, this);
 	}
 	else
 	{
