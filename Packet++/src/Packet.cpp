@@ -114,7 +114,18 @@ void Packet::copyDataFrom(const Packet& other)
 	m_FreeRawPacket = true;
 	m_MaxPacketLen = other.m_MaxPacketLen;
 	m_ProtocolTypes = other.m_ProtocolTypes;
-	m_FirstLayer = new EthLayer((uint8_t*)m_RawPacket->getRawData(), m_RawPacket->getRawDataLen(), this);
+	switch(m_RawPacket->getLinkLayerType()) {
+	case LINKTYPE_LINUX_SLL:
+		m_FirstLayer = new SllLayer((uint8_t*)m_RawPacket->getRawData(), m_RawPacket->getRawDataLen(), this);
+		break;
+	case LINKTYPE_RAW:
+		m_FirstLayer = new IPv4Layer((uint8_t*)m_RawPacket->getRawData(), m_RawPacket->getRawDataLen(), NULL, this);
+		break;
+	default:
+		m_FirstLayer = new EthLayer((uint8_t*)m_RawPacket->getRawData(), m_RawPacket->getRawDataLen(), this);
+		break;
+	}
+	// m_FirstLayer = new EthLayer((uint8_t*)m_RawPacket->getRawData(), m_RawPacket->getRawDataLen(), this);
 	m_LastLayer = m_FirstLayer;
 	Layer* curLayer = m_FirstLayer;
 	while (curLayer != NULL)

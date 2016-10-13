@@ -70,6 +70,7 @@ void RawPacket::copyDataFrom(const RawPacket& other, bool allocateData)
 
 	memcpy(m_pRawData, other.m_pRawData, other.m_RawDataLen);
 	m_RawPacketSet = true;
+	m_linkLayerType = other.m_linkLayerType;
 }
 
 bool RawPacket::setRawData(const uint8_t* pRawData, int rawDataLen, timeval timestamp, LinkLayerType layerType)
