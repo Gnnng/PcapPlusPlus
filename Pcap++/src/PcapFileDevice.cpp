@@ -90,6 +90,7 @@ bool PcapFileReaderDevice::open()
 		case LINKTYPE_ETHERNET:
 		case LINKTYPE_LINUX_SLL:
 		case 12: //FIXME: DLT_RAW should be 101 rather than 12
+				//FIXME(Gong Deli): m_PcapLinkLayerType should be DLT_ values, not LINKTYPE_ values.
 			m_PcapLinkLayerType = LINKTYPE_RAW; // correct the data link type
 			break;
 		

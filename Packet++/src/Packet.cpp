@@ -65,7 +65,7 @@ void Packet::setRawPacket(RawPacket* rawPacket, bool freeRawPacket)
 
 Packet::Packet(RawPacket* rawPacket, bool freeRawPacket)
 {
-	m_FreeRawPacket = false;
+	m_FreeRawPacket = freeRawPacket;
 	m_RawPacket = NULL;
 	setRawPacket(rawPacket, freeRawPacket);
 }
