@@ -2,8 +2,13 @@
 #define PCAPPP_RAW_PACKET
 
 #include <stdint.h>
+#ifdef _MSC_VER
+#include <WinSock2.h>
+#else
 #include <sys/time.h>
+#endif
 #include <stddef.h>
+#include <net/bpf.h>
 
 /// @file
 
@@ -43,7 +48,7 @@ namespace pcpp
 		/** 	RFC 1483 LLC/SNAP-encapsulated ATM */
 		LINKTYPE_ATM_RFC1483 = 100,
 		/** Raw IP */
-		LINKTYPE_RAW = 101,
+		LINKTYPE_RAW = DLT_RAW,
 		/** Cisco PPP with HDLC framing */
 		LINKTYPE_C_HDLC = 104,
 		/** IEEE 802.11 wireless LAN */

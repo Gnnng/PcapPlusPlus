@@ -13,6 +13,6 @@ cat mk/PcapPlusPlus.mk.macosx >> $PCAPPLUSPLUS_MK
 
 echo "\n\nPCAPPLUSPLUS_HOME := "$PWD >> $PLATFORM_MK
 
-sed -i -e '1s|^|PCAPPLUSPLUS_HOME := '$PWD'\'$'\n''\'$'\n''|' $PCAPPLUSPLUS_MK
+sed -i "" -e '1s|^|PCAPPLUSPLUS_HOME := '$PWD'\'$'\n''\'$'\n''|' $PCAPPLUSPLUS_MK
 
 echo "PcapPlusPlus configuration is complete. Files created (or modified): $PLATFORM_MK, $PCAPPLUSPLUS_MK"
