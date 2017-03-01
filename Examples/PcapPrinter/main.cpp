@@ -70,7 +70,7 @@ std::string printFileSummary(IFileReaderDevice* reader)
 	stream << "~~~~~~~~~~~~~" << std::endl;
 	stream << "   File name: " << reader->getFileName() << std::endl;
 	stream << "   File size: " << reader->getFileSize() << " bytes" << std::endl;
-	
+
 	if (dynamic_cast<PcapFileReaderDevice*>(reader) != NULL)
 	{
 		PcapFileReaderDevice* pcapReader = dynamic_cast<PcapFileReaderDevice*>(reader);
@@ -81,11 +81,13 @@ std::string printFileSummary(IFileReaderDevice* reader)
 			stream << "   Link layer type: Linux cooked capture" << std::endl;
 		else if (linkLayer == LINKTYPE_NULL)
 			stream << "   Link layer type: Null/Loopback" << std::endl;
+		else if (linkLayer == LINKTYPE_RAW)
+			stream << "   Link layer type: Raw IP" << std::endl;
 		else
 			stream << "   Link layer type: " << (int)linkLayer << std::endl;
 	}
 	else if (dynamic_cast<PcapNgFileReaderDevice*>(reader) != NULL)
-	{ 
+	{
 		PcapNgFileReaderDevice* pcapNgReader = dynamic_cast<PcapNgFileReaderDevice*>(reader);
 		if (pcapNgReader->getOS() != "")
 			stream << "   OS: " << pcapNgReader->getOS() << std::endl;
@@ -124,7 +126,7 @@ int printPcapPackets(PcapFileReaderDevice* reader, std::ostream* out, int packet
 
 		packetCountSoFar++;
 	}
-	
+
 	// return the nubmer of packets that were printed
 	return packetCountSoFar;
 }
@@ -239,7 +241,7 @@ int main(int argc, char* argv[])
 			delete reader;
 			EXIT_WITH_ERROR("Couldn't set filter '%s'", filter.c_str());
 		}
-			
+
 	}
 
 	// print file summary
@@ -268,7 +270,7 @@ int main(int argc, char* argv[])
 		PcapNgFileReaderDevice* pcapNgReader = dynamic_cast<PcapNgFileReaderDevice*>(reader);
 		printedPacketCount = printPcapNgPackets(pcapNgReader, out, packetCount);
 	}
-	
+
 	(*out) << "Finished. Printed " << printedPacketCount << " packets" << std::endl;
 
 	// close the file
