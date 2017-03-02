@@ -35,8 +35,10 @@
 #include <DpdkDeviceList.h>
 #include <DpdkDevice.h>
 #include <NetworkUtils.h>
-#ifndef WIN32 //for using ntohl, ntohs, etc.
-#include <in.h>
+#ifdef LINUX
+#include <in.h> //for using ntohl, ntohs, etc.
+#elif MAC_OS_X
+#include <arpa/inet.h> //for using ntohl, ntohs, etc.
 #endif
 
 using namespace std;
@@ -1183,7 +1185,7 @@ PCAPP_TEST(TestPcapLiveDeviceNoNetworking)
 
     PCAPP_TEST_PASSED;
 }
- 
+
 PCAPP_TEST(TestPcapLiveDeviceStatsMode)
 {
 	PcapLiveDevice* liveDev = PcapLiveDeviceList::getInstance().getPcapLiveDeviceByIp(args.ipToSendReceivePackets.c_str());
@@ -3177,7 +3179,7 @@ PCAPP_TEST(TestDpdkDeviceWorkerThreads)
 	LoggerPP::getInstance().enableErrors();
 	dev->stopCapture();
 	dev->close();
-	
+
 	PCAPP_ASSERT(dev->openMultiQueues(dev->getTotalNumOfRxQueues(), dev->getTotalNumOfTxQueues()) == true, "Cannot open DPDK device");
 
 	int numOfAttempts = 0;
@@ -3536,7 +3538,7 @@ static struct option PcapTestOptions[] =
     {0, 0, 0, 0}
 };
 
-void print_usage() 
+void print_usage()
 {
     printf("Usage: Pcap++Test -i ip_to_use | -n [-d] [-r ip_addr] [-p port] [-k dpdk_port]\n\n"
     		"Flags:\n"
